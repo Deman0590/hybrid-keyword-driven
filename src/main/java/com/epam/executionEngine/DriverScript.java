@@ -3,6 +3,7 @@ package com.epam.executionEngine;
 import com.epam.config.ActionKeywords;
 import com.epam.config.Constants;
 import com.epam.utility.ExcelUtils;
+import com.epam.utility.Log;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -38,14 +39,15 @@ public class DriverScript {
             if (run.equals("Yes")) {
                 int testStep = excelUtils.getRowContains(testCaseId, Constants.COL_TEST_CASE_ID, Constants.SHEET_TEST_STEPS);
                 int testLastStep = excelUtils.getTestStepsCount(Constants.SHEET_TEST_STEPS, testCaseId, testStep);
-
+                Log.startTestCase(testCaseId);
                 for (; testStep <= testLastStep; testStep++) {
                     String keyword = excelUtils.getCellData(testStep, Constants.COL_ACTION_KEYWORD, Constants.SHEET_TEST_STEPS);
                     String pageObject = excelUtils.getCellData(testStep, Constants.COL_PAGE_OBJECT, Constants.SHEET_TEST_STEPS);
 
                     System.out.println(keyword + " - " + pageObject);
-//                    executeActions(keyword, pageObject);
+                    executeActions(keyword, pageObject);
                 }
+                Log.endTestCase(testCaseId);
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.epam.config;
 
+import com.epam.utility.Log;
 import com.epam.utility.PropertiesUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,7 +10,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 public class ActionKeywords {
 
@@ -21,39 +21,47 @@ public class ActionKeywords {
     }
 
     public static void openBrowser(String object) {
+        Log.info("Trying opening browser");
         System.setProperty("webdriver.gecko.driver", "C:\\Programs\\WebDrivers\\firefox\\geckodriver.exe");
         driver = new FirefoxDriver();
         properties = new PropertiesUtils().getProperties();
+        Log.info("Browser open");
     }
 
     public static void navigate(String object) {
+        Log.info("Navigating to URL");
 //        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get(Constants.URL);
     }
 
-    public static void click(String object){
+    public static void click(String object) {
+        Log.info("Clicking on Webelement "+ object);
         WebElement element = getElement(properties.getProperty(object));
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(element));
         element.click();
     }
 
     public static void inputUsername(String object) {
+        Log.info("Entering the text in UserName");
         WebElement element = getElement(properties.getProperty(object));
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(element));
         element.sendKeys(Constants.USERNAME);
     }
 
     public static void inputPassword(String object) {
+        Log.info("Entering the text in Password");
         WebElement element = getElement(properties.getProperty(object));
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(element));
         element.sendKeys(Constants.PASSWORD);
     }
 
     public static void waitFor(String object) throws InterruptedException {
+        Log.info("Wait some time until user enter captcha");
         Thread.sleep(80000);
     }
 
     public static void closeBrowser(String object) {
+        Log.info("Closing the browser");
         if (null != driver) {
             driver.quit();
         }
