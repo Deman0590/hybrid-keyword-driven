@@ -11,16 +11,14 @@ public class Constants {
     public static final int COL_TEST_SCENARIO_ID = 1;
     public static final int COL_PAGE_OBJECT = 3;
     public static final int COL_ACTION_KEYWORD = 4;
-    public static final int COL_TESTSTEP_RESULT = 5;
+    public static final int COL_DATA_SET = 5;
+    public static final int COL_TEST_STEP_RESULT = 6;
 
     public static final int COL_RUN_MODE = 2;
     public static final int COL_RESULT = 3;
 
     public static final String SHEET_TEST_STEPS = "Test Steps";
     public static final String SHEET_TEST_CASES = "Test Cases";
-
-    public static final String USERNAME = "deman0590@gmail.com";
-    public static final String PASSWORD = "8@aKw!7ldCyt";
 
     public static final String KEYWORD_FAIL = "FAIL";
     public static final String KEYWORD_PASS = "PASS";

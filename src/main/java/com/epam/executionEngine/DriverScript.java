@@ -47,14 +47,15 @@ public class DriverScript {
                     for (; testStep <= testLastStep; testStep++) {
                         String keyword = excelUtils.getCellData(testStep, Constants.COL_ACTION_KEYWORD, Constants.SHEET_TEST_STEPS);
                         String pageObject = excelUtils.getCellData(testStep, Constants.COL_PAGE_OBJECT, Constants.SHEET_TEST_STEPS);
+                        String data = excelUtils.getCellData(testStep, Constants.COL_DATA_SET, Constants.SHEET_TEST_STEPS);
 
                         System.out.println(keyword + " - " + pageObject);
 
                         try {
-                            executeActions(keyword, pageObject);
-                            excelUtils.setCellData(Constants.KEYWORD_PASS, testStep, Constants.COL_TESTSTEP_RESULT, Constants.SHEET_TEST_STEPS);
+                            executeActions(keyword, pageObject, data);
+                            excelUtils.setCellData(Constants.KEYWORD_PASS, testStep, Constants.COL_TEST_STEP_RESULT, Constants.SHEET_TEST_STEPS);
                         } catch (Exception e) {
-                            excelUtils.setCellData(Constants.KEYWORD_FAIL, testStep, Constants.COL_TESTSTEP_RESULT, Constants.SHEET_TEST_STEPS);
+                            excelUtils.setCellData(Constants.KEYWORD_FAIL, testStep, Constants.COL_TEST_STEP_RESULT, Constants.SHEET_TEST_STEPS);
                             testCasePass = false;
                             break;
                         }
@@ -70,11 +71,11 @@ public class DriverScript {
         }
     }
 
-    private void executeActions(String keyword, String pageObject) throws Exception {
+    private void executeActions(String keyword, String pageObject, String data) throws Exception {
 
         for (int i = 0; i < method.length; i++) {
             if (method[i].getName().equals(keyword)) {
-                method[i].invoke(actionKeywords, pageObject);
+                method[i].invoke(actionKeywords, pageObject, data);
                 break;
             }
         }
