@@ -1,6 +1,6 @@
 package com.epam.config;
 
-import com.epam.utility.ActionExecutionException;
+import com.epam.exception.ActionExecutionException;
 import com.epam.utility.Log;
 import com.epam.utility.PropertiesUtils;
 import org.openqa.selenium.By;
@@ -29,6 +29,9 @@ public class ActionKeywords {
             properties = new PropertiesUtils().getProperties();
             Log.info("Browser open");
         } catch (Exception e) {
+            if (null != driver) {
+                driver.quit();
+            }
             throw new ActionExecutionException(e.getMessage());
         }
     }
@@ -39,6 +42,9 @@ public class ActionKeywords {
 //        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             driver.get(Constants.URL);
         } catch (Exception e) {
+            if (null != driver) {
+                driver.quit();
+            }
             throw new ActionExecutionException(e.getMessage());
         }
     }
@@ -50,6 +56,9 @@ public class ActionKeywords {
             new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(element));
             element.click();
         } catch (Exception e) {
+            if (null != driver) {
+                driver.quit();
+            }
             throw new ActionExecutionException(e.getMessage());
         }
     }
@@ -61,6 +70,9 @@ public class ActionKeywords {
             new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(element));
             element.sendKeys(Constants.USERNAME);
         } catch (Exception e) {
+            if (null != driver) {
+                driver.quit();
+            }
             throw new ActionExecutionException(e.getMessage());
         }
     }
@@ -72,6 +84,9 @@ public class ActionKeywords {
             new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(element));
             element.sendKeys(Constants.PASSWORD);
         } catch (Exception e) {
+            if (null != driver) {
+                driver.quit();
+            }
             throw new ActionExecutionException(e.getMessage());
         }
     }
@@ -79,8 +94,11 @@ public class ActionKeywords {
     public static void waitFor(String object) throws ActionExecutionException {
         try {
             Log.info("Wait some time until user enter captcha");
-            Thread.sleep(8000);
+            Thread.sleep(80000);
         } catch (Exception e) {
+            if (null != driver) {
+                driver.quit();
+            }
             throw new ActionExecutionException(e.getMessage());
         }
     }
