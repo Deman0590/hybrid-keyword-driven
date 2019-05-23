@@ -3,11 +3,13 @@ package com.epam.config;
 import com.epam.exception.ActionExecutionException;
 import com.epam.utility.Log;
 import com.epam.utility.PropertiesUtils;
+import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -75,10 +77,16 @@ public class ActionKeywords {
         }
     }
 
-    public static void waitFor(String object, String data) throws ActionExecutionException {
+    public static void waitFor(final String object, String data) throws ActionExecutionException {
         try {
             Log.info("Wait some time until user enter captcha");
-            Thread.sleep(80000);
+            WebElement element = (new WebDriverWait(driver, 120))
+                    .until(new ExpectedCondition<WebElement>() {
+                        @NullableDecl
+                        public WebElement apply(@NullableDecl WebDriver webDriver) {
+                            return getElement(properties.getProperty(object));
+                        }
+                    });
         } catch (Exception e) {
             closeBrowser("", "");
             throw new ActionExecutionException(e.getMessage());
